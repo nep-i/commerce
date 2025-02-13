@@ -1,4 +1,6 @@
-import type { CommerceAPI, CommerceAPIConfig } from '@vercel/commerce/api'
+import type { CommerceAPI } from '@vercel/commerce/api'
+import { CommerceAPIConfig } from '@vercel/commerce/api'
+
 import { getCommerceApi as commerceApi } from '@vercel/commerce/api'
 import createFetcher from './utils/fetch-local'
 

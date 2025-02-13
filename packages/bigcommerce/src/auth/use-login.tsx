@@ -7,35 +7,14 @@ import useCustomer from '../customer/use-customer'
 
 export default useLogin as UseLogin<typeof handler>
 
-export const handler: MutationHook<LoginHook> = {
+export const handler: MutationHook<any> = {
   fetchOptions: {
-    url: '/api/commerce/login',
-    method: 'POST',
+    query: '',
   },
-  async fetcher({ input: { email, password }, options, fetch }) {
-    if (!(email && password)) {
-      throw new CommerceError({
-        message: 'An email and password are required to login',
-      })
-    }
-
-    return fetch({
-      ...options,
-      body: { email, password },
-    })
+  async fetcher() {
+    return null
   },
-  useHook:
-    ({ fetch }) =>
-    () => {
-      const { mutate } = useCustomer()
-
-      return useCallback(
-        async function login(input) {
-          const data = await fetch({ input })
-          await mutate()
-          return data
-        },
-        [fetch, mutate]
-      )
-    },
+  useHook: () => () => {
+    return async function () {}
+  },
 }

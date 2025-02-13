@@ -1,4 +1,13 @@
-const commerce = require('./commerce.config.json')
+const commerce = {
+  provider: '@vercel/commerce-local',
+  features: {
+    cart: true,
+    search: true,
+    wishlist: true,
+    customerAuth: true,
+    customCheckout: true,
+  },
+}
 const { withCommerceConfig, getProviderName } = require('./commerce-config')
 
 const provider = commerce.provider || getProviderName()
@@ -39,6 +48,22 @@ module.exports = withCommerceConfig({
   // Avoid Module not found: ESM packages (supports-color) need to be imported. Use 'import' to reference the package instead. https://nextjs.org/docs/messages/import-esm-externals
   experimental: {
     esmExternals: 'loose',
+  },
+  env: {},
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: [
+        {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
+      ],
+      exclude: /node_modules/,
+    })
+    return config
   },
 })
 
